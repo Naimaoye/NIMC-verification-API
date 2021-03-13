@@ -17,7 +17,6 @@ const password = Joi.string()
           password
         }),
         edit: Joi.object().keys({
-            email,
             password
         }),
     }
