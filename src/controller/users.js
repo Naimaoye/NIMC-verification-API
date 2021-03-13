@@ -89,7 +89,7 @@ static async signin(req, res) {
      */
 static async editUser(req, res) {
   try{
-  let { password, firstName, lastName, phoneNumber } = req.body;
+  let { email, password, firstName, lastName, phoneNumber } = req.body;
     email = email.trim();
     firstName = firstName.trim();
     lastName = lastName.trim();
