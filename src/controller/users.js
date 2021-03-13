@@ -144,7 +144,7 @@ static async returnSingleUser(req, res) {
         data: { 
           email: user.email,
           firstName: user.firstName,
-          lastName: user.lastname,
+          lastName: user.lastName,
           phoneNumber: user.phoneNumber,
           requestToken: user.token 
         }
