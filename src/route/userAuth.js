@@ -15,7 +15,7 @@ userRoute.post('/signin',
   UserController.signin);
 
 userRoute.post(
-      '/edit/password',
+      '/edit',
       userValidations.validateUser('edit'),
       UserController.editUser);
 
