@@ -16,7 +16,6 @@ userRoute.post('/signin',
 
 userRoute.post(
       '/edit',
-      userValidations.validateUser('edit'),
       UserController.editUser);
 
 userRoute.get(

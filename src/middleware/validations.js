@@ -31,11 +31,4 @@ const password = Joi.string()
           email,
           password
         }),
-        edit: Joi.object().keys({
-          firstName,
-          lastName,
-          phoneNumber,
-            email,
-            password
-        }),
     }
