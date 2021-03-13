@@ -1,0 +1,42 @@
+{
+  "name": "verification-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/app.js --exec babel-node",
+    "build": "babel -d ./build ./src -s",
+    "start": "npm install && npm run build && node ./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://naimah_d@bitbucket.org/digitalpulse_software/verification-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/digitalpulse_software/verification-backend#readme",
+  "dependencies": {
+    "@babel/cli": "^7.6.3",
+    "@babel/core": "^7.6.3",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "@babel/runtime-corejs3": "^7.6.3",
+    "@hapi/joi": "^15.0.3",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "bcryptjs": "^2.4.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.7.3",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v17.3.0",
+    "uuidv4": "^6.2.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  }
+}
