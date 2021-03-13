@@ -19,4 +19,9 @@ userRoute.post(
       userValidations.validateUser('edit'),
       UserController.editUser);
 
+userRoute.get(
+        '/user',
+        UserController.returnSingleUser);
+  
+
       export default userRoute; 

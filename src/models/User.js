@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const userSchema =  new mongoose.Schema({
-    email: { type: String, required: true, lowercase: true, unique: true},
+    email: { type: String, required: true, lowercase: true, unique: true },
+    firstName: { type: String },
+    lastName: { type: String },
+    phoneNumber: { type: String },
     password: { type: String, required: true },
     token: { type: Number,  default: 0 },
-    requestDate: { type: Date, default: Date.now },
-    requestStatus: { type: String, default: 'failed' },
-    numberOfRequests: { type: Number,  default: 0 },
     createdAt: { type: Date, default: Date.now }
 });
 
