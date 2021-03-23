@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import Report from '../models/Report';
 import User from '../models/User';
 import { SECRET_KEY } from '../config/config';
 
@@ -33,6 +34,11 @@ let {
   let token = jwt.sign({
     id: resp._id,
   }, SECRET_KEY);
+  let history = {
+    userId: resp._id
+  }
+  let newReport = new Report(history);
+  await newReport.save();
   return res.status(201).json({
     message: 'user created successfully',
     status: 201,
@@ -63,7 +69,7 @@ static async signin(req, res) {
     const user = await User.findOne({ email });
     let token = jwt.sign({
       id: user.id,
-    }, SECRET_KEY, { expiresIn: '5h' });
+    }, SECRET_KEY, { expiresIn: '12h' });  
     return res.status(200).json({
       status: 200, 
       message:'Login successful.', 
@@ -71,6 +77,7 @@ static async signin(req, res) {
       requestToken: user.token
     });
   }catch(e){
+    console.log(e)
     return res.status(500).json({
       status: 500, 
       error:'database error'
@@ -157,4 +164,36 @@ static async returnSingleUser(req, res) {
       })
     }
   }
+
+  /**
+     * @method
+     * @description Implements signin endpoint
+     * @static
+     * @param {object} req - Request object
+     * @param {object} res - Response object
+     * @returns {object} JSON response
+     * @memberof UserController
+     */
+
+static async addToken(req, res) {
+  //use the user's email
+  const {email, token} = req.body;
+  const user = User.findOne({email: email});
+  if(user){
+    const oldToken = user.token;
+    const newToken = oldToken + token;
+    user.token = newToken;
+    await user.save();
+    return res.status(200).json({
+      status: 200,
+      message: 'Token successfully added',
+  });
+  } else{
+    return res.status(404).json({
+      status: 404,
+      message: 'user not found',
+  });
+  }
+};
+
 }
