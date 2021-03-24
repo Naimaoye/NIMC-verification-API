@@ -182,7 +182,8 @@ static async addToken(req, res) {
   const user = await User.findOne({email: email});
   if(user){
     const oldToken = user.token;
-    const newToken = oldToken + token;
+    const tokenBody = parseFloat(token);
+    const newToken = oldToken + tokenBody;
     user.token = newToken;
     const resp = await user.save();
     return res.status(200).json({
