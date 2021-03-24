@@ -176,17 +176,19 @@ static async returnSingleUser(req, res) {
      */
 
 static async addToken(req, res) {
+  try{
   //use the user's email
   const {email, token} = req.body;
-  const user = User.findOne({email: email});
+  const user = await User.findOne({email: email});
   if(user){
     const oldToken = user.token;
     const newToken = oldToken + token;
     user.token = newToken;
-    await user.save();
+    const resp = await user.save();
     return res.status(200).json({
       status: 200,
       message: 'Token successfully added',
+      data: resp.token
   });
   } else{
     return res.status(404).json({
@@ -194,6 +196,13 @@ static async addToken(req, res) {
       message: 'user not found',
   });
   }
+}catch(e){
+  console.log("err", e)
+  return res.status(500).json({
+    status: 500,
+    message: 'internal server error',
+});
+}
 };
 
 }
