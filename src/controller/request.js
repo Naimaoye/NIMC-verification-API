@@ -3,6 +3,7 @@
 // deduct from token for every successful requests, and count the number of requests, add request date and status for report sake
 // create add token endpoint to add more token
 import { uuid } from 'uuidv4';
+import axios from 'axios';
 import User from '../models/User';
 import Report from '../models/Report';
 import { checkNetwork } from '../util/checkNetwork';
@@ -21,7 +22,7 @@ export default class RequestController {
      */
 static async searchCandidate(req, res) {
   try{
-  const {phoneNumber} = req.query;
+  const { phoneNumber } = req.query;
   const userId = req.user.id;
   const user = await User.findOne({_id: userId})
   if(user.token >= 1){
@@ -30,7 +31,7 @@ static async searchCandidate(req, res) {
     const addPhoneNumberPrefix = phoneNumber.replace('0', '234');
     const url  =  `"http://10.0.0.65:9960/lookup?op=basic-info&msisdn=${addPhoneNumberPrefix}&network=${networkProvider}`;
     const headers = {
-      ' api-key': 'TaoPv/d8bFH/tuCVzE322Q=='
+      'api-key': 'TaoPv/d8bFH/tuCVzE322Q=='
   }
   
   const response = await axios.get(url, {headers});
@@ -97,6 +98,7 @@ static async searchCandidate(req, res) {
   }
  
 } catch(e){
+  console.log(e)
   return res.status(500).send({
     message: "internal server error",
     data: null
