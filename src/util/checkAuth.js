@@ -1,10 +1,8 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { SECRET_KEY } from '../config/config'
 
 
-const key = process.env.SECRET_KEY
+
 class Authentication {
 
     static async verifyToken(req, res, next){
@@ -13,7 +11,7 @@ class Authentication {
     const token = authHeader.split('Bearer ')[1];
     if (token) {
       try {
-        const decoded = jwt.verify(token, key);
+        const decoded = jwt.verify(token, SECRET_KEY);
         req.user = decoded;
         return next();
       } catch (err) {
