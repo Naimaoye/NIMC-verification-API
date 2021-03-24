@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import mongodb from 'mongodb';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path'
@@ -9,6 +10,7 @@ import userAuth from './route/userAuth';
 
 const app = express();
 
+const MongoClient = mongodb.MongoClient;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -29,9 +31,16 @@ const options = {
   poolSize: 10, // Maintain up to 10 socket connections
 };
 
-mongoose.connect(devUri, options, (err) => {
+// mongoose.connect(devUri, options, (err) => {
+//   if (err) throw err;
+//   console.log('connected to the DB!');
+// });
+
+
+MongoClient.connect(devUri, function(err, db) {
   if (err) throw err;
-  console.log('connected to the DB!');
+  console.log("Database created!");
+  db.close();
 });
 
 mongoose.set('useFindAndModify', false);
