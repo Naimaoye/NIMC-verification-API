@@ -31,17 +31,17 @@ const options = {
   poolSize: 10, // Maintain up to 10 socket connections
 };
 
-mongoose.connect(devUri, options, (err) => {
-  if (err) throw err;
-  console.log('connected to the DB!');
-});
-
-
-// MongoClient.connect(devUri, function(err, db) {
+// mongoose.connect(devUri, options, (err) => {
 //   if (err) throw err;
-//   console.log("Database created!");
-//   db.close();
+//   console.log('connected to the DB!');
 // });
+
+
+MongoClient.connect(liveUri, function(err, db) {
+  if (err) throw err;
+  console.log("Database created!");
+  db.close();
+});
 
 mongoose.set('useFindAndModify', false);
 
