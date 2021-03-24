@@ -5,7 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path'
 import methodOverride from 'method-override';
-import { devUri } from './config/config';
+import { devUri, liveUri } from './config/config';
 import userAuth from './route/userAuth';
 
 const app = express();
@@ -31,17 +31,17 @@ const options = {
   poolSize: 10, // Maintain up to 10 socket connections
 };
 
-// mongoose.connect(devUri, options, (err) => {
-//   if (err) throw err;
-//   console.log('connected to the DB!');
-// });
-
-
-MongoClient.connect(devUri, function(err, db) {
+mongoose.connect(devUri, options, (err) => {
   if (err) throw err;
-  console.log("Database created!");
-  db.close();
+  console.log('connected to the DB!');
 });
+
+
+// MongoClient.connect(devUri, function(err, db) {
+//   if (err) throw err;
+//   console.log("Database created!");
+//   db.close();
+// });
 
 mongoose.set('useFindAndModify', false);
 
