@@ -121,7 +121,10 @@ static async searchCandidate(req, res) {
     if(report){
       return res.status(200).send({
         message: "success",
-        data: report
+        data: {
+          numberOfRequests: report.numberOfRequests,
+          requests: report.requests
+        }
       })
     }else{
       return res.status(404).send({
