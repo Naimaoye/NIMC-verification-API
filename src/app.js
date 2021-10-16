@@ -53,13 +53,13 @@ app.use((req, res, next) => {
       status: 404,
       error: 'Wrong request. Route does not exist',
     });
-});  
+});
 
 //Error handlers & middlewares
 if(!isProduction) {
     app.use((err, req, res, next) => {
       res.status(err.status || 500);
-  
+
       res.json({
         errors: {
           message: err.message,
@@ -72,7 +72,7 @@ if(!isProduction) {
 
   app.use((err, req, res) => {
     res.status(err.status || 500);
-  
+
     res.json({
       errors: {
         message: err.message,

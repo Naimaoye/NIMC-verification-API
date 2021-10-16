@@ -28,7 +28,7 @@ let {
   let user = {
     email, password, firstName, lastName, phoneNumber
   };
-   
+
   let newUser = new User(user);
   const resp = await newUser.save();
   let token = jwt.sign({
@@ -46,7 +46,7 @@ let {
   });
 } catch(e){
   return res.status(500).json({
-    status: 500, 
+    status: 500,
     error: 'database error'
   });
 }
@@ -69,17 +69,17 @@ static async signin(req, res) {
     const user = await User.findOne({ email });
     let token = jwt.sign({
       id: user.id,
-    }, SECRET_KEY, { expiresIn: '12h' });  
+    }, SECRET_KEY, { expiresIn: '12h' });
     return res.status(200).json({
-      status: 200, 
-      message:'Login successful.', 
+      status: 200,
+      message:'Login successful.',
       jwToken: token,
       requestToken: user.token
     });
   }catch(e){
     console.log(e)
     return res.status(500).json({
-      status: 500, 
+      status: 500,
       error:'database error'
     });
   }
@@ -148,19 +148,60 @@ static async returnSingleUser(req, res) {
       }
       return res.status(200).json({
         status: 200,
-        data: { 
+        data: {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
           phoneNumber: user.phoneNumber,
-          requestToken: user.token 
+          requestToken: user.token
         }
     });
-     
+
+    } catch(err){
+      res.status(500).json({
+        status: 500,
+        message: err.message
+      })
+    }
+  }
+
+
+  /**
+     * @method
+     * @description Implements returnLoggeduser endpoint
+     * @static
+     * @param {object} req - query parameter
+     * @param {object} res - Response object
+     * @returns {object} JSON response
+     * @memberof UserController
+     */
+
+static async returnLoggedUser(req, res) {
+    try{
+      let token = req.headers.authorization.split('Bearer ')[1];
+const {id} = jwt.verify(token, SECRET_KEY);
+      const user = await User.findOne({_id: id});
+      if(!user){
+        return res.status(404).json({
+          status: 404,
+          message: 'user not found',
+      });
+      }
+      return res.status(200).json({
+        status: 200,
+        data: {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phoneNumber: user.phoneNumber,
+          requestToken: user.token
+        }
+    });
+
     } catch(e){
       res.status(500).json({
         status: 500,
-        message: err
+        message: e.message
       })
     }
   }

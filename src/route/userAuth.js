@@ -25,10 +25,14 @@ userRoute.get(
         UserController.returnSingleUser);
 
 userRoute.get(
+        '/me',
+        UserController.returnLoggedUser);
+
+userRoute.get(
           '/search', Authentication.verifyToken,
           ReportController.searchCandidate
 );
-  
+
 userRoute.get(
   '/history', Authentication.verifyToken,
   ReportController.returnUserRequestHistory
@@ -37,6 +41,6 @@ userRoute.get(
 userRoute.post(
   '/addToken',
   UserController.addToken
-);   
+);
 
-export default userRoute; 
+export default userRoute;
